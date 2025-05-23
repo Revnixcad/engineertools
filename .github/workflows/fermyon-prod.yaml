@@ -1,0 +1,42 @@
+name: Fermyon Deploy
+
+# Deploy only when a change is pushed or merged to `main`
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  spin:
+    runs-on: ubuntu-latest
+    name: Build and deploy
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+          targets: wasm32-wasi
+
+      - name: Add Missing Rust Targets
+        run: |
+          rustup target add wasm32-unknown-unknown wasm32-wasip1
+
+      - name: Install Cargo Leptos
+        run: |
+          cargo install --locked cargo-leptos
+
+      - name: Install wasm-bindgen CLI (compatible version)
+        run: |
+          cargo install -f wasm-bindgen-cli --version 0.2.100
+
+      - name: Install Spin
+        uses: fermyon/actions/spin/setup@v1
+
+      - name: Build and deploy
+        uses: fermyon/actions/spin/deploy@v1
+        with:
+          fermyon_token: ${{ secrets.FERMYON_CLOUD_TOKEN }}
