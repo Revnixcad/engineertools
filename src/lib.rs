@@ -1,4 +1,6 @@
 mod app;
+mod i18n;
+pub mod translations;
 
 #[cfg(feature = "ssr")]
 mod server;

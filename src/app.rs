@@ -1,4 +1,6 @@
+use crate::i18n::*;
 use components::{Route, Router, Routes};
+use fluent_bundle::{FluentArgs, FluentValue};
 use leptos::{prelude::*, task::spawn_local};
 use leptos_meta::*;
 use leptos_router::*;
@@ -27,6 +29,10 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
 pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
+    let (lang, set_lang) = signal("en".to_string());
+    let i18n = I18n::new(&lang.get()); // now it's a real I18n
+
+    provide_context(i18n);
 
     let fallback = || view! { "Page not found." }.into_view();
 
@@ -35,6 +41,8 @@ pub fn App() -> impl IntoView {
         <Meta name="description" content="A website for engineers!"/>
 
         <Title text="Welcome engineertools.nl"/>
+        <button on:click=move |_| set_lang.set("en".to_string())>"EN"</button>
+        <button on:click=move |_| set_lang.set("nl".to_string())>"NL"</button>
 
         <Router>
             <main>
@@ -51,6 +59,7 @@ pub fn App() -> impl IntoView {
 #[allow(non_snake_case)]
 #[component]
 fn HomePage() -> impl IntoView {
+    let i18n = use_context::<I18n>().expect("i18n context not found");
     // Creates a reactive value to update the button
     let (count, set_count) = signal(0);
     let on_click = move |_| {
@@ -59,10 +68,12 @@ fn HomePage() -> impl IntoView {
             save_count(count.get()).await.unwrap();
         });
     };
+    let mut args = FluentArgs::new();
+    args.set("count", FluentValue::from(count.get()));
 
     view! {
-      <h1>"Welcome to engineering.nl!"</h1>
-      <button on:click=on_click>"Click Me: " {count}</button>
+      <h1>{i18n.t("welcome")}</h1>
+      <button on:click=on_click>{i18n.t("click-me")}</button>
     }
 }
 
