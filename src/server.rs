@@ -1,7 +1,4 @@
-use leptos::{
-    config::get_configuration,
-    task::Executor as LeptosExecutor
-};
+use leptos::{config::get_configuration, task::Executor as LeptosExecutor};
 use leptos_wasi::{
     handler::HandlerError,
     prelude::{IncomingRequest, ResponseOutparam, WasiExecutor},
@@ -9,7 +6,7 @@ use leptos_wasi::{
 use wasi::exports::http::incoming_handler::Guest;
 use wasi::http::proxy::export;
 
-use crate::app::{shell, App, SaveCount};
+use crate::app::{shell, App};
 
 struct LeptosServer;
 
@@ -41,7 +38,7 @@ async fn handle_request(
 
     Handler::build(request, response_out)?
         // NOTE: Add all server functions here to ensure functionality works as expected!
-        .with_server_fn::<SaveCount>()
+        // .with_server_fn::<CalculateSum>()
         // Fetch all available routes from your App.
         .generate_routes(App)
         // Actually process the request and write the response.

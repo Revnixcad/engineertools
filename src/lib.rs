@@ -1,4 +1,6 @@
 mod app;
+mod cards;
+mod pages;
 
 #[cfg(feature = "ssr")]
 mod server;

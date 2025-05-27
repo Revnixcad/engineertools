@@ -18,10 +18,7 @@ spin-sdk = { version = "3", optional = true }
 # `wasi` needs to be locked until https://github.com/fermyon/spin/issues/2928 lands in a release
 wasi = { version = "=0.13.2", optional = true }
 wasm-bindgen = { version = "0.2.100", optional = true }
-fluent = "0.16"
-fluent-bundle = "0.15"
-unic-langid = "0.9"
-phf = { version = "0.11", features = ["macros"] }
+
 
 [workspace]
 

@@ -1,5 +1,7 @@
+use crate::pages::basics::BasicsPage;
+use crate::pages::home::HomePage;
 use components::{Route, Router, Routes};
-use leptos::{prelude::*, task::spawn_local};
+use leptos::prelude::*;
 use leptos_meta::*;
 use leptos_router::*;
 
@@ -24,11 +26,72 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
 
 #[allow(non_snake_case)]
 #[component]
+pub fn PageHeader() -> impl IntoView {
+    view! {
+        <header id="page-header">
+            <h1>engineertools.nl</h1>
+        </header>
+    }
+}
+
+#[allow(non_snake_case)]
+#[component]
+pub fn NavBar() -> impl IntoView {
+    view! {
+        <nav id="main-menu">
+            <ul>
+                <li class="menu-item">
+                    <a href="/">"Home"</a>
+                    <a href="/basics">"Basics"</a>
+                </li>
+            </ul>
+        </nav>
+    }
+}
+
+#[allow(non_snake_case)]
+#[component]
+pub fn Content() -> impl IntoView {
+    let fallback = || view! { "Page not found." }.into_view();
+    view! {
+       <main id="content">
+            <Router>
+                <main>
+                    <Routes fallback>
+                       <Route path=path!("") view=HomePage/>
+                       <Route path=path!("/basics") view=BasicsPage/>
+                       <Route path=path!("/*any") view=NotFound/>
+                    </Routes>
+                </main>
+            </Router>
+
+        </main>
+    }
+}
+
+#[allow(non_snake_case)]
+#[component]
+pub fn PageFooter() -> impl IntoView {
+    view! {
+        <footer id="page-footer">
+            <small>Copyright 2025 engineertools.nl</small>
+        </footer>
+    }
+}
+
+#[allow(non_snake_case)]
+#[component]
+pub fn Container(children: Children) -> impl IntoView {
+    view! {
+        <div class="container">{children()}</div>
+    }
+}
+
+#[allow(non_snake_case)]
+#[component]
 pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
-
-    let fallback = || view! { "Page not found." }.into_view();
 
     view! {
         <Stylesheet id="leptos" href="/pkg/engineertools.css"/>
@@ -36,34 +99,12 @@ pub fn App() -> impl IntoView {
 
         <Title text="Welcome engineertools.nl"/>
 
-        <Router>
-            <main>
-                <Routes fallback>
-                    <Route path=path!("") view=HomePage/>
-                    <Route path=path!("/*any") view=NotFound/>
-                </Routes>
-            </main>
-        </Router>
-    }
-}
-
-/// Renders the home page of your application.
-#[allow(non_snake_case)]
-#[component]
-fn HomePage() -> impl IntoView {
-    // Creates a reactive value to update the button
-    let (count, set_count) = signal(0);
-    let on_click = move |_| {
-        set_count.update(|count| *count += 1);
-        spawn_local(async move {
-            save_count(count.get()).await.unwrap();
-        });
-    };
-
-    view! {
-      <h1>"Welcome to engineertools.nl"</h1>
-
-      <button on:click=on_click>"Click me: " {count}</button>
+        <Container>
+            <PageHeader/>
+            <NavBar/>
+            <Content/>
+            <PageFooter/>
+        </Container>
     }
 }
 
@@ -87,14 +128,4 @@ fn NotFound() -> impl IntoView {
     }
 
     view! { <h1>"Not Found"</h1> }
-}
-
-#[server(prefix = "/api")]
-pub async fn save_count(count: u32) -> Result<(), ServerFnError<String>> {
-    println!("Saving value {count}");
-    let store = spin_sdk::key_value::Store::open_default().map_err(|e| e.to_string())?;
-    store
-        .set_json("engineertools_count", &count)
-        .map_err(|e| ServerFnError::ServerError(e.to_string()))?;
-    Ok(())
 }
