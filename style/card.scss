@@ -1,0 +1,64 @@
+.card {
+  background-color: rgb(240, 240, 240);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+  // max card width: 400px;
+  max-width: 400px;
+}
+
+
+// card h1 
+.card>h1 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+// card p
+.card>p {
+  font-size: 1em;
+  margin: 10px 0;
+}
+
+.card-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px; // space between items
+}
+
+.card-inputs>input[type="text"] {
+  width: 60px; // or adjust as needed
+  height: 30px;
+  padding: 6px;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.card-inputs>button {
+  background-color: rgb(27, 27, 27);
+  color: rgb(230, 230, 230);
+  border: none;
+  height: 30px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.card-inputs>button:hover {
+  background-color: rgb(50, 50, 50);
+  color: rgb(255, 255, 255);
+}
+
+.card-inputs>p {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.card-results {
+  margin-top: 20px;
+}
+.card-results>p {
+  font-size: 1.2em;
+  margin: 10px 0;
+}

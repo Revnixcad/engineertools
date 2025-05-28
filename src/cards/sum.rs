@@ -14,11 +14,20 @@ pub fn SumCard() -> impl IntoView {
     };
 
     view! {
-      <p>"SumCard 1 + 1 = 2"</p>
-      <input type="text" bind:value=num1 />
-      <p>" + "</p>
-      <input type="text" bind:value=num2 />
-      <button on:click=calculate_sum>"Calculate Sum"</button>
-    <p>"Result: " {sum_result}</p>
+      <div class="card">
+      <h1>"Sum Calculator"</h1>
+
+      <div class="card-inputs">
+        <input type="text" pattern="[0-9]*" bind:value=num1 />
+        <p>+</p>
+        <input type="text" pattern="[0-9]*" bind:value=num2 />
+        <button on:click=calculate_sum>"Calculate Sum"</button>
+      </div>
+
+      <div class="card-result">
+        <p>"The sum is: " {sum_result}</p>
+      </div>
+
+      </div>
     }
 }
