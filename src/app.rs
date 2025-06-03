@@ -28,7 +28,7 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
 #[component]
 pub fn PageHeader() -> impl IntoView {
     view! {
-        <header id="page-header">
+        <header class="header">
             <h1>engineertools.nl</h1>
         </header>
     }
@@ -37,15 +37,26 @@ pub fn PageHeader() -> impl IntoView {
 #[allow(non_snake_case)]
 #[component]
 pub fn NavBar() -> impl IntoView {
+    let location = leptos_router::hooks::use_location();
+    let path_is_active = move |path: &str| location.pathname.get() == path;
+
     view! {
-        <nav id="main-menu">
-            <ul>
-                <li class="menu-item">
-                    <a href="/">"Home"</a>
-                    <a href="/basics">"Basics"</a>
-                </li>
-            </ul>
-        </nav>
+        <div class="menu">
+            <a class=move || {
+                    if path_is_active("/") {
+                        "menu__item--active"
+                    } else {
+                        "menu__item"
+                    }
+                } href="/">"Home"</a>
+            <a class=move || {
+                    if path_is_active("/basics") {
+                        "menu__item--active"
+                    } else {
+                        "menu__item"
+                    }
+                } href="/basics">"Basics"</a>
+        </div>
     }
 }
 
@@ -54,17 +65,14 @@ pub fn NavBar() -> impl IntoView {
 pub fn Content() -> impl IntoView {
     let fallback = || view! { "Page not found." }.into_view();
     view! {
-       <main id="content">
+       <main class="content">
             <Router>
-                <main>
-                    <Routes fallback>
-                       <Route path=path!("") view=HomePage/>
-                       <Route path=path!("/basics") view=BasicsPage/>
-                       <Route path=path!("/*any") view=NotFound/>
-                    </Routes>
-                </main>
+                <Routes fallback>
+                   <Route path=path!("") view=HomePage/>
+                   <Route path=path!("/basics") view=BasicsPage/>
+                   <Route path=path!("/*any") view=NotFound/>
+                </Routes>
             </Router>
-
         </main>
     }
 }
@@ -73,7 +81,7 @@ pub fn Content() -> impl IntoView {
 #[component]
 pub fn PageFooter() -> impl IntoView {
     view! {
-        <footer id="page-footer">
+        <footer class="footer">
             <small>Copyright 2025 engineertools.nl</small>
         </footer>
     }

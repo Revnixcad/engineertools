@@ -1,0 +1,14 @@
+@use "sass:color";
+@use "../abstracts/variables" as *;
+// html reference
+//<footer id="page-footer">
+//    <small>Copyright 2025 engineertools.nl</small>
+//</footer>
+
+.footer {
+  grid-area: footer;
+  padding-top: 12px;
+  background-color: color.adjust($background-color, $lightness: -5%);
+  text-align: center;
+  font-size: 0.9rem;
+}
