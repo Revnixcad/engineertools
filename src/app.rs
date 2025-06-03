@@ -37,8 +37,8 @@ pub fn PageHeader() -> impl IntoView {
 #[allow(non_snake_case)]
 #[component]
 pub fn NavBar() -> impl IntoView {
-    let location = leptos_router::hooks::use_location();
-    let path_is_active = move |path: &str| location.pathname.get() == path;
+    let path_is_active =
+        move |path: &str| leptos_router::hooks::use_location().pathname.get() == path;
 
     view! {
         <div class="menu">
@@ -65,7 +65,7 @@ pub fn NavBar() -> impl IntoView {
 pub fn Content() -> impl IntoView {
     let fallback = || view! { "Page not found." }.into_view();
     view! {
-       <main class="content">
+        <main class="content">
             <Router>
                 <Routes fallback>
                    <Route path=path!("") view=HomePage/>
