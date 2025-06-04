@@ -37,8 +37,14 @@ fn en_translations() -> HashMap<&'static str, &'static str> {
         ("home_welcome", "Welcome to engineertools.nl"),
         ("home_description", "This is a website for engineers, built with Leptos!"),
         ("home_resources", "You can use this website to find useful tools and resources for your engineering projects."),   
+        // basic page
+        ("basic_page_title", "Basic Calculations"),
+        ("basic_page_description", "This page contains basic calculations for engineers."),
         // sum calculator
         ("sum_calculator", "Sum Calculator"),
+        ("calculate_sum", "Calculate Sum"),
+        ("sum_result", "The sum is: "),
+        // footer
         ("copyright", "Copyright 2025 engineertools.nl"),
         // ...add more keys
     ])
@@ -54,8 +60,14 @@ fn nl_translations() -> HashMap<&'static str, &'static str> {
         ("home_welcome", "Welkom bij engineertools.nl"),
         ("home_description", "Dit is een website voor engineers, gebouwd met Leptos!"),
         ("home_resources", "Je kunt deze website gebruiken om nuttige tools en bronnen te vinden voor je engineering projecten."),
+        // basic page
+        ("basic_page_title", "Basis Berekeningen"),
+        ("basic_page_description", "Deze pagina bevat basis berekeningen voor engineers."),
         // sum calculator
         ("sum_calculator", "Som Calculator"),
+        ("calculate_sum", "Bereken som"),
+        ("sum_result", "De som is: "),
+        // footer
         ("copyright", "Auteursrecht 2025 engineertools.nl"),
         // ...add more keys
     ])
