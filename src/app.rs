@@ -1,3 +1,4 @@
+use crate::locales::i18n::I18n;
 use crate::pages::basics::BasicsPage;
 use crate::pages::home::HomePage;
 use components::{Route, Router, Routes};
@@ -27,9 +28,13 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
 #[allow(non_snake_case)]
 #[component]
 pub fn PageHeader() -> impl IntoView {
+    let set_lang = use_context::<WriteSignal<String>>().expect("set_lang context not found");
+
     view! {
         <header class="header">
             <h1>engineertools.nl</h1>
+            <button on:click=move |_| set_lang.set("en".to_string())>"EN"</button>
+            <button on:click=move |_| set_lang.set("nl".to_string())>"NL"</button>
         </header>
     }
 }
@@ -80,9 +85,13 @@ pub fn Content() -> impl IntoView {
 #[allow(non_snake_case)]
 #[component]
 pub fn PageFooter() -> impl IntoView {
+    // Use the I18n context to get the current language
+
+    let i18n = use_context::<Memo<I18n>>().expect("I18n context not found");
     view! {
         <footer class="footer">
             <small>Copyright 2025 engineertools.nl</small>
+            <small>{move || i18n.get().t("welcome").to_string()}</small>
         </footer>
     }
 }
@@ -101,11 +110,22 @@ pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
 
+    // Create a signal for the current language
+    let (lang, set_lang) = signal("en".to_string());
+
+    // Create a memoized I18n that updates when lang changes
+    let i18n = Memo::new(move |_| I18n::new(&lang.get()));
+
+    // Provide the memo as context
+    provide_context(i18n);
+    provide_context(set_lang);
+
     view! {
         <Stylesheet id="leptos" href="/pkg/engineertools.css"/>
         <Meta name="description" content="A website for engineers!"/>
 
         <Title text="Welcome engineertools.nl"/>
+
 
         <Container>
             <PageHeader/>

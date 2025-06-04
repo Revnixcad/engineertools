@@ -1,5 +1,6 @@
 mod app;
 mod cards;
+mod locales;
 mod pages;
 
 #[cfg(feature = "ssr")]
