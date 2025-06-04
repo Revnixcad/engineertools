@@ -29,16 +29,34 @@ impl I18n {
 
 fn en_translations() -> HashMap<&'static str, &'static str> {
     HashMap::from([
-        ("welcome", "Welcome!"),
+        ("website_for_engineers", "A website for engineers!"),
+        ("welcome_to_engineertools", "Welcome to engineertools.nl"),
+        ("menu_home", "Home"),
+        ("menu_basics", "Basic calculations"),
+        // home text
+        ("home_welcome", "Welcome to engineertools.nl"),
+        ("home_description", "This is a website for engineers, built with Leptos!"),
+        ("home_resources", "You can use this website to find useful tools and resources for your engineering projects."),   
+        // sum calculator
         ("sum_calculator", "Sum Calculator"),
+        ("copyright", "Copyright 2025 engineertools.nl"),
         // ...add more keys
     ])
 }
 
 fn nl_translations() -> HashMap<&'static str, &'static str> {
     HashMap::from([
-        ("welcome", "Welkom!"),
+        ("website_for_engineers", "Een website voor engineers!"),
+        ("welcome_to_engineertools", "Welkom bij engineertools.nl"),
+        ("menu_home", "Home"),
+        ("menu_basics", "Basis berekeningen"),
+        // home text
+        ("home_welcome", "Welkom bij engineertools.nl"),
+        ("home_description", "Dit is een website voor engineers, gebouwd met Leptos!"),
+        ("home_resources", "Je kunt deze website gebruiken om nuttige tools en bronnen te vinden voor je engineering projecten."),
+        // sum calculator
         ("sum_calculator", "Som Calculator"),
+        ("copyright", "Auteursrecht 2025 engineertools.nl"),
         // ...add more keys
     ])
 }

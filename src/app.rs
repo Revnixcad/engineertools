@@ -33,8 +33,10 @@ pub fn PageHeader() -> impl IntoView {
     view! {
         <header class="header">
             <h1>engineertools.nl</h1>
-            <button on:click=move |_| set_lang.set("en".to_string())>"EN"</button>
-            <button on:click=move |_| set_lang.set("nl".to_string())>"NL"</button>
+            <div class ="language_toggle">
+                <button on:click=move |_| set_lang.set("en".to_string())>"EN"</button>
+                <button on:click=move |_| set_lang.set("nl".to_string())>"NL"</button>
+            </div>
         </header>
     }
 }
@@ -45,6 +47,8 @@ pub fn NavBar() -> impl IntoView {
     let path_is_active =
         move |path: &str| leptos_router::hooks::use_location().pathname.get() == path;
 
+    let i18n = use_context::<Memo<I18n>>().expect("I18n context not found");
+
     view! {
         <div class="menu">
             <a class=move || {
@@ -53,14 +57,14 @@ pub fn NavBar() -> impl IntoView {
                     } else {
                         "menu__item"
                     }
-                } href="/">"Home"</a>
+                } href="/">{move || i18n.get().t("menu_home").to_string()}</a>
             <a class=move || {
                     if path_is_active("/basics") {
                         "menu__item--active"
                     } else {
                         "menu__item"
                     }
-                } href="/basics">"Basics"</a>
+                } href="/basics">{move || i18n.get().t("menu_basics").to_string()}</a>
         </div>
     }
 }
@@ -90,8 +94,7 @@ pub fn PageFooter() -> impl IntoView {
     let i18n = use_context::<Memo<I18n>>().expect("I18n context not found");
     view! {
         <footer class="footer">
-            <small>Copyright 2025 engineertools.nl</small>
-            <small>{move || i18n.get().t("welcome").to_string()}</small>
+            <small>{move || i18n.get().t("copyright").to_string()}</small>
         </footer>
     }
 }
@@ -122,9 +125,10 @@ pub fn App() -> impl IntoView {
 
     view! {
         <Stylesheet id="leptos" href="/pkg/engineertools.css"/>
-        <Meta name="description" content="A website for engineers!"/>
+        <Meta name="description" content=move || i18n.get().t("website_for_engineers").to_string()/>
 
-        <Title text="Welcome engineertools.nl"/>
+        // <Title text="Welcome to engineertools.nl"/>
+        <Title text=move || i18n.get().t("welcome_to_engineertools").to_string() />
 
 
         <Container>
