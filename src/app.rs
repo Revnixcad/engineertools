@@ -107,14 +107,40 @@ pub fn Container(children: Children) -> impl IntoView {
     }
 }
 
+pub fn get_local_storage() -> Option<web_sys::Storage> {
+    leptos::prelude::window().local_storage().ok().flatten()
+}
+
+pub fn get_local_storage_item(key: &str) -> Option<String> {
+    if let Some(storage) = get_local_storage() {
+        storage.get_item(key).ok().flatten()
+    } else {
+        None
+    }
+}
+
+pub fn set_local_storage_item(key: &str, value: &str) -> Result<(), web_sys::ErrorEvent> {
+    if let Some(storage) = get_local_storage() {
+        Ok(storage.set_item(key, value)?)
+    } else {
+        Err(web_sys::ErrorEvent::new("Local storage not available").unwrap())
+    }
+}
+
 #[allow(non_snake_case)]
 #[component]
 pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
 
-    // Create a signal for the current language
-    let (lang, set_lang) = signal("en".to_string());
+    let (lang, set_lang) = signal("nl".to_string()); // Default to "nl"
+
+    // Retrieve the stored language from localStorage on the browser
+    Effect::new(move |_| {
+        if let Some(stored_lang) = get_local_storage_item("lang") {
+            set_lang.set(stored_lang);
+        }
+    });
 
     // Create a memoized I18n that updates when lang changes
     let i18n = Memo::new(move |_| I18n::new(&lang.get()));
@@ -122,6 +148,14 @@ pub fn App() -> impl IntoView {
     // Provide the memo as context
     provide_context(i18n);
     provide_context(set_lang);
+
+    // when lang in i18n changes, update localStorage
+    Effect::new(move |_| {
+        let current_lang = lang.get();
+        if let Err(e) = set_local_storage_item("lang", &current_lang) {
+            eprintln!("Error setting localStorage item: {:?}", e);
+        }
+    });
 
     view! {
         <Stylesheet id="leptos" href="/pkg/engineertools.css"/>
