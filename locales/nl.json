@@ -1,6 +1,0 @@
-{
-  "hello_world": "Hallo Wereld!",
-  "click_to_change_lang": "Klik om de taal te veranderen",
-  "click_count": "Je hebt <b>{{ count }}</b> keer geklikt",
-  "click_to_inc": "Klik om de teller te verhogen"
-}

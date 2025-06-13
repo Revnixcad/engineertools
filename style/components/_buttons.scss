@@ -2,26 +2,43 @@
 @use "../abstracts/variables" as *;
 
 .btn {
-  padding: $spacing-sm $spacing-md;
+  background-color: $primary-color;
+  padding-inline-start: 0.875rem;
+  padding-inline-end: 0.875rem;
+  padding-block-start: 0.625rem;
+  padding-block-end: 0.625rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
+  transition: background-color 0.2s;
 
-  &--primary {
-    background-color: $primary-color;
-    color: white;
-
-    &:hover {
-      background-color: color.adjust($primary-color, $lightness: -10%);
-    }
+  &:hover {
+    background-color: $secondary-color;
   }
 
-  &--secondary {
-    background-color: $secondary-color;
-    color: white;
 
-    &:hover {
-      background-color: color.adjust($secondary-color, $lightness: -10%);
-    }
+}
+
+.btn--secondary {
+  background-color: $secondary-color;
+  padding-inline-start: 0.875rem;
+  padding-inline-end: 0.875rem;
+  padding-block-start: 0.625rem;
+  padding-block-end: 0.625rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: color.adjust($secondary-color, $lightness: -10%);
   }
 }
