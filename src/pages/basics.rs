@@ -1,4 +1,7 @@
-use crate::{cards::sum::SumCard, locales::i18n::I18n};
+use crate::{
+    cards::{area::AreaCard, sum::SumCard},
+    locales::i18n::I18n,
+};
 use leptos::prelude::*;
 
 #[allow(non_snake_case)]
@@ -19,6 +22,7 @@ pub fn BasicsPage() -> impl IntoView {
         <p>{move || i18n.get().t("basic_page_description").to_string()}</p>
         <BasicsContainer>
             <SumCard />
+            <AreaCard />
         </BasicsContainer>
     }
 }
