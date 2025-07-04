@@ -1,0 +1,19 @@
+@use "../abstracts/variables" as *;
+
+#basic-page {
+  margin: $spacing-lg;
+  background-color: $background-color; // Use a variable for background color
+  color: $text-color; // Use a variable for text color
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+

@@ -8,6 +8,7 @@
   background-color: white;
   padding: $spacing-md;
   border-radius: $border-radius;
+  // width: 100%;
   @include box-shadow;
 
   &__title {

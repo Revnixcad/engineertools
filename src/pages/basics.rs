@@ -8,7 +8,7 @@ use leptos::prelude::*;
 #[component]
 pub fn BasicsContainer(children: Children) -> impl IntoView {
     view! {
-        <div>{children()}</div>
+        <div class="cards-container">{children()}</div>
     }
 }
 
@@ -18,11 +18,15 @@ pub fn BasicsPage() -> impl IntoView {
     let i18n = use_context::<Memo<I18n>>().expect("I18n context not found");
 
     view! {
-        <h1>{move || i18n.get().t("basic_page_title").to_string()}</h1>
-        <p>{move || i18n.get().t("basic_page_description").to_string()}</p>
-        <BasicsContainer>
-            <SumCard />
-            <AreaCard />
-        </BasicsContainer>
+        <div id="basic-page">
+            <h1>{move || i18n.get().t("basic_page_title").to_string()}</h1>
+            <p>{move || i18n.get().t("basic_page_description").to_string()}</p>
+            <BasicsContainer>
+                <SumCard />
+                <AreaCard />
+                <AreaCard />
+                <AreaCard />
+            </BasicsContainer>
+        </div>
     }
 }
