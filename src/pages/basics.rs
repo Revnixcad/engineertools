@@ -1,5 +1,8 @@
 use crate::{
-    cards::{area::AreaCard, sum::SumCard},
+    cards::{
+        area::{CircleCard, RectangleCard},
+        sum::SumCard,
+    },
     locales::i18n::I18n,
 };
 use leptos::prelude::*;
@@ -23,9 +26,8 @@ pub fn BasicsPage() -> impl IntoView {
             <p>{move || i18n.get().t("basic_page_description").to_string()}</p>
             <BasicsContainer>
                 <SumCard />
-                <AreaCard />
-                <AreaCard />
-                <AreaCard />
+                <CircleCard />
+                <RectangleCard />
             </BasicsContainer>
         </div>
     }

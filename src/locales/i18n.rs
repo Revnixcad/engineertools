@@ -41,13 +41,17 @@ fn en_translations() -> HashMap<&'static str, &'static str> {
         ("basic_page_title", "Basic Calculations"),
         ("basic_page_description", "This page contains basic calculations for engineers."),
         // sum calculator
-        ("sum_calculator", "Sum Calculator"),
+        ("sum_calculator", "Sum calculator"),
         ("calculate_sum", "Calculate Sum"),
         ("sum_result", "The sum is: "),
-        // area calculator
-        ("area_calculator", "Area Calculator"),
-        ("calculate_area", "Calculate Area"),
-        ("area_result", "The area is: "),
+        // rectangular area calculator
+        ("rec_area_calculator", "Rectangular area calculator"),
+        ("rec_area_calculate", "Calculate rectangle area"),
+        ("rec_area_result", "The area of rectangle is: "),
+        //circle area calculator
+        ("circle_area_calculator", "Circle area calculator"),
+        ("circle_area_calculate", "Calculate circle area"),
+        ("circle_area_result", "The area of circle is: "),
         // footer
         ("copyright", "Copyright 2025 engineertools.nl"),
         // ...add more keys
@@ -71,10 +75,14 @@ fn nl_translations() -> HashMap<&'static str, &'static str> {
         ("sum_calculator", "Som Calculator"),
         ("calculate_sum", "Bereken som"),
         ("sum_result", "De som is: "),
-        // area calculator
-        ("area_calculator", "Oppervlakte Calculator"),
-        ("calculate_area", "Bereken Oppervlakte"),
-        ("area_result", "De oppervlakte is: "),
+        // rectangular area calculator
+        ("rec_area_calculator", "Rechthoek oppervlakte calculator"),
+        ("rec_area_calculate", "Bereken oppervlakte"),
+        ("rec_area_result", "De oppervlakte van rechthoek is: "),
+        // circle area calculator
+        ("circle_area_calculator", "Cirkel oppervlakte calculator"),
+        ("circle_area_calculate", "Bereken oppervlakte"),
+        ("circle_area_result", "De oppervlakte van de cirkel is: "),
         // footer
         ("copyright", "Auteursrecht 2025 engineertools.nl"),
         // ...add more keys
