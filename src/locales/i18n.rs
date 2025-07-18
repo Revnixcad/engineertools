@@ -35,7 +35,7 @@ fn en_translations() -> HashMap<&'static str, &'static str> {
         ("menu_basics", "Basic calculations"),
         // home text
         ("home_welcome", "Welcome to engineertools.nl"),
-        ("home_description", "This is a website for engineers, built with Leptos!"),
+        ("home_description", "This is a website for engineers!"),
         ("home_resources", "You can use this website to find useful tools and resources for your engineering projects."),   
         // basic page
         ("basic_page_title", "Basic Calculations"),
@@ -53,6 +53,7 @@ fn en_translations() -> HashMap<&'static str, &'static str> {
         ("rec_area_hoogte",  "Height"), 
         //circle area calculator
         ("circle_area_calculator", "Circle area calculator"),
+        ("circle_area_radius", "Radius"),
         ("circle_area_calculate", "Calculate circle area"),
         ("circle_area_result", "The area of circle is: "),
         // footer
@@ -69,7 +70,7 @@ fn nl_translations() -> HashMap<&'static str, &'static str> {
         ("menu_basics", "Basis berekeningen"),
         // home text
         ("home_welcome", "Welkom bij engineertools.nl"),
-        ("home_description", "Dit is een website voor engineers, gebouwd met Leptos!"),
+        ("home_description", "Dit is een website voor engineers!"),
         ("home_resources", "Je kunt deze website gebruiken om nuttige tools en bronnen te vinden voor je engineering projecten."),
         // basic page
         ("basic_page_title", "Basis Berekeningen"),
@@ -87,6 +88,7 @@ fn nl_translations() -> HashMap<&'static str, &'static str> {
         ("rec_area_hoogte", "Hoogte"), 
         // circle area calculator
         ("circle_area_calculator", "Cirkel oppervlakte calculator"),
+        ("circle_area_radius", "Straal"),
         ("circle_area_calculate", "Bereken oppervlakte"),
         ("circle_area_result", "De oppervlakte van de cirkel is: "),
         // footer

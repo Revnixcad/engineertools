@@ -49,7 +49,7 @@ pub fn calculate_rectangle_area(rectangle: &Rectangle) -> Result<f64, Calculatio
     Ok(rectangle.width * rectangle.height)
 }
 
-pub fn calculate_circle_area(circle: Circle) -> Result<f64, CalculationError> {
+pub fn calculate_circle_area(circle: &Circle) -> Result<f64, CalculationError> {
     if circle.radius < 0.0 {
         return Err(CalculationError {
             message: "Radius must be non-negative".to_string(),
@@ -79,7 +79,7 @@ pub fn RectangleCard() -> impl IntoView {
             0.0 // Default to 0 on error
         }));
 
-        // Render the formula dynamically
+        // Render the latex formula dynamically
         let formula = format!(
             r"A = w \times h \\ A = {} \times {} \\ A = {}",
             rect.width,
@@ -139,16 +139,50 @@ pub fn CircleCard() -> impl IntoView {
         let circ = Circle {
             radius: radius.get().parse::<f64>().unwrap_or(0.0),
         };
-        let area = calculate_circle_area(circ);
+        let area = calculate_circle_area(&circ);
         sum_result.set(area.unwrap_or_else(|e| {
             leptos::logging::error!("Calculation error: {}", e.message);
             0.0 // Default to 0 on error
         }));
+        // Render the latex formula dynamically
+        let formula = format!(
+            r"A = \pi r^2 \\ A = \pi \cdot {}^2 \\ A = {:.2}",
+            circ.radius,
+            sum_result.get()
+        );
+        if let Some(element) = web_sys::window()
+            .and_then(|win| win.document())
+            .and_then(|doc| doc.get_element_by_id("circle-formula"))
+        {
+            let katex = js_sys::Reflect::get(&js_sys::global(), &"katex".into()).unwrap();
+            let render = js_sys::Reflect::get(&katex, &"render".into())
+                .unwrap()
+                .dyn_into::<js_sys::Function>() // Convert JsValue to Function
+                .expect("Expected katex.render to be a function");
+
+            let _ = render.call2(&katex, &formula.into(), &element.into());
+        }
+    };
+
+    let copy_to_clipboard = move |_| {
+        if let Some(window) = web_sys::window() {
+            let navigator = window.navigator(); // Access the Navigator object
+            let clipboard = navigator.clipboard();
+            let result_text = format!("{:.2}", sum_result.get());
+            let _ = clipboard.write_text(&result_text);
+            leptos::logging::log!("Copied to clipboard: {}", result_text);
+        } else {
+            leptos::logging::error!("Window object not available");
+        }
     };
 
     view! {
       <div class="card">
         <a class="card__title">{move || i18n.get().t("circle_area_calculator").to_string()}</a>
+        <div class="card__variables">
+            <p>"A = "{move || i18n.get().t("rec_area_area").to_string()}</p>
+            <p>"r = "{move || i18n.get().t("circle_area_radius").to_string()}</p>
+        </div>
         <div class="card__inputs">
           <input type="text" pattern="[0-9]*" bind:value=radius />
           <button class="card__inputs__button" on:click=calculate_area>{move || i18n.get().t("circle_area_calculate").to_string()}</button>
@@ -159,7 +193,9 @@ pub fn CircleCard() -> impl IntoView {
                     radius: radius.get().parse::<f64>().unwrap_or(0.0),
                 }) />
             </div>
+            <div id="circle-formula" class="card__result__formula"></div>
           <p>{move || i18n.get().t("circle_area_result").to_string()}{sum_result}</p>
+          <button class="card__result__copy" on:click=copy_to_clipboard>{move || i18n.get().t("copy_to_clipboard").to_string()}</button>
         </div>
       </div>
     }
