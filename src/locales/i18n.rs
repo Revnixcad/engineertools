@@ -48,6 +48,9 @@ fn en_translations() -> HashMap<&'static str, &'static str> {
         ("rec_area_calculator", "Rectangular area calculator"),
         ("rec_area_calculate", "Calculate rectangle area"),
         ("rec_area_result", "The area of rectangle is: "),
+        ("rec_area_area", "Area"),
+        ("rec_area_breedte", "Width"),
+        ("rec_area_hoogte",  "Height"), 
         //circle area calculator
         ("circle_area_calculator", "Circle area calculator"),
         ("circle_area_calculate", "Calculate circle area"),
@@ -79,6 +82,9 @@ fn nl_translations() -> HashMap<&'static str, &'static str> {
         ("rec_area_calculator", "Rechthoek oppervlakte calculator"),
         ("rec_area_calculate", "Bereken oppervlakte"),
         ("rec_area_result", "De oppervlakte van rechthoek is: "),
+        ("rec_area_area", "Oppervlakte"),
+        ("rec_area_breedte", "Breedte"),
+        ("rec_area_hoogte", "Hoogte"), 
         // circle area calculator
         ("circle_area_calculator", "Cirkel oppervlakte calculator"),
         ("circle_area_calculate", "Bereken oppervlakte"),

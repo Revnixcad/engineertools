@@ -13,7 +13,7 @@
 
   &__title {
     font-size: 1.25rem;
-    margin-bottom: $spacing-sm;
+    margin-bottom: $spacing-lg;
   }
   &__inputs {
     > input {
@@ -32,4 +32,15 @@
     font-size: 1.1rem;
     color: $primary-color;
   }
+}
+
+.card__variables {
+  margin-bottom: $spacing-md;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.card__variables p {
+  margin: 0;
+  line-height: 1.5;
 }
