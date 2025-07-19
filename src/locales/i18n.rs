@@ -56,6 +56,8 @@ fn en_translations() -> HashMap<&'static str, &'static str> {
         ("circle_area_radius", "Radius"),
         ("circle_area_calculate", "Calculate circle area"),
         ("circle_area_result", "The area of circle is: "),
+        // other keys
+        ("copy_to_clipboard", "Copy to clipboard"),
         // footer
         ("copyright", "Copyright 2025 engineertools.nl"),
         // ...add more keys
@@ -91,6 +93,8 @@ fn nl_translations() -> HashMap<&'static str, &'static str> {
         ("circle_area_radius", "Straal"),
         ("circle_area_calculate", "Bereken oppervlakte"),
         ("circle_area_result", "De oppervlakte van de cirkel is: "),
+        // other keys
+        ("copy_to_clipboard", "Kopieer naar klembord"),
         // footer
         ("copyright", "Auteursrecht 2025 engineertools.nl"),
         // ...add more keys

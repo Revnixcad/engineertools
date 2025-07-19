@@ -100,6 +100,18 @@ pub fn RectangleCard() -> impl IntoView {
         }
     };
 
+    let copy_to_clipboard = move |_| {
+        if let Some(window) = web_sys::window() {
+            let navigator = window.navigator(); // Access the Navigator object
+            let clipboard = navigator.clipboard();
+            let result_text = format!("{:.2}", sum_result.get());
+            let _ = clipboard.write_text(&result_text);
+            leptos::logging::log!("Copied to clipboard: {}", result_text);
+        } else {
+            leptos::logging::error!("Window object not available");
+        }
+    };
+
     view! {
       <div class="card">
         <a class="card__title">{move || i18n.get().t("rec_area_calculator").to_string()}</a>
@@ -122,6 +134,7 @@ pub fn RectangleCard() -> impl IntoView {
             </div>
             <div id="rectangle-formula" class="card__result__formula"></div>
           <p>{move || i18n.get().t("rec_area_result").to_string()}{sum_result}</p>
+          <button on:click=copy_to_clipboard>{move || i18n.get().t("copy_to_clipboard").to_string()}</button>
         </div>
       </div>
     }
@@ -195,7 +208,7 @@ pub fn CircleCard() -> impl IntoView {
             </div>
             <div id="circle-formula" class="card__result__formula"></div>
           <p>{move || i18n.get().t("circle_area_result").to_string()}{sum_result}</p>
-          <button class="card__result__copy" on:click=copy_to_clipboard>{move || i18n.get().t("copy_to_clipboard").to_string()}</button>
+          <button on:click=copy_to_clipboard>{move || i18n.get().t("copy_to_clipboard").to_string()}</button>
         </div>
       </div>
     }

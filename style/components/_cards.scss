@@ -42,5 +42,11 @@
     margin-top: $spacing-md;
     font-size: 1.1rem;
     color: $primary-color;
+    > button {
+      @extend .btn;
+      margin-top: $spacing-sm;
+      width: 100%;
+    }
   }
+
 }
