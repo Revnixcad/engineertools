@@ -48,5 +48,21 @@
       width: 100%;
     }
   }
+  // svg in cards styling
+    // SVG styling within cards
+    svg {
+      fill: $primary-color;
+      stroke: black;
+  
+      // Styling for the group with id "dimension"
+      #dimension {
+        fill: black;
+        stroke: black;
+      }
+    }
+
 
 }
+
+
+

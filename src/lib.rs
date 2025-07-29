@@ -1,5 +1,7 @@
 mod app;
+mod calculations;
 mod cards;
+mod dom;
 mod locales;
 mod pages;
 
