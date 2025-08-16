@@ -13,10 +13,9 @@ component = "engineertools"
 [component.engineertools]
 source = "target/wasm32-wasip1/release/engineertools.wasm"
 allowed_outbound_hosts = []
-key_value_stores = ["default"]
 [component.engineertools.build]
 command = "cargo leptos build --release && LEPTOS_OUTPUT_NAME=engineertools cargo build --lib --target wasm32-wasip1 --release --no-default-features --features ssr"
-watch = ["src/**/*.rs", "Cargo.toml"]
+watch = ["src/**/*.rs", "Cargo.toml", "style/main.scss", "style/**/*.scss"]
 
 [[trigger.http]]
 route = "/pkg/..."

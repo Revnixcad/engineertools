@@ -1,0 +1,10 @@
+@use "../abstracts/variables" as *;
+
+.homepage {
+  padding: $spacing-lg;
+
+  &__intro {
+    font-size: 1.2rem;
+    margin-bottom: $spacing-lg;
+  }
+}

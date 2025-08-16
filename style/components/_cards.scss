@@ -1,0 +1,71 @@
+@use "sass:color";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "../components/buttons" as *;
+@use "../components/inputs" as *;
+
+.card {
+  background-color: white;
+  padding: $spacing-md;
+  border-radius: $border-radius;
+  // width: 100%;
+  @include box-shadow;
+
+  &__title {
+    font-size: 1.25rem;
+    margin-bottom: $spacing-lg;
+  }
+  &__variables {
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-md;
+    font-size: 0.9rem;
+    color: #555;
+    > p {
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+  &__inputs {
+    margin-top: $spacing-md;
+    > input {
+      @extend .input;
+      width: 100%;
+      margin-bottom: $spacing-sm;
+    }
+
+    > button {
+      @extend .btn;
+      width: 100%;
+    }
+  }
+  &__result {
+    margin-top: $spacing-md;
+    font-size: 1.1rem;
+    color: $primary-color;
+    > button {
+      @extend .btn;
+      margin-top: $spacing-sm;
+      width: 100%;
+    }
+  }
+    // SVG styling within cards
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+      fill: $primary-color;
+      stroke: black;
+  
+      // Styling for the group with id "dimension"
+      #dimension {
+        fill: black;
+        stroke: black;
+      }
+    }
+
+
+}
+
+
+

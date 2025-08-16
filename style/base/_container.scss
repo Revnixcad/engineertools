@@ -1,0 +1,15 @@
+@use "../abstracts/variables" as *;
+
+.container {
+  position: fixed;
+  min-height: 100vh;
+  inset: 0; 
+  display: grid;
+  grid-template-areas:
+    "header"
+    "menu"
+    "content"
+    "footer";
+  grid-template-rows: $header-height $menu-height 1fr $footer-height;
+  grid-template-columns: 1fr;
+}

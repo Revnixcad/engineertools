@@ -1,0 +1,23 @@
+@use "sass:color";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+
+.menu {
+  grid-area: menu;
+  width: 100%;
+  background-color: $primary-color;
+  padding: $spacing-md;
+  @include box-shadow;
+
+  &__item {
+    color: white;
+    text-decoration: none;
+    padding: $spacing-sm;
+
+    &--active,
+    &:hover {
+      color: color.adjust($primary-color, $lightness: 40%);
+    }
+  }
+}
