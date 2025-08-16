@@ -3,15 +3,20 @@ use crate::calculations::shapes_2d::*;
 use crate::dom::clipboard::float_to_clipboard;
 use crate::locales::i18n::I18n;
 use leptos::prelude::*;
-use leptos::svg::G;
 use leptos::wasm_bindgen::JsCast;
 
 pub fn create_rectangle_svg(rectangle: Rectangle) -> String {
+    let x_position = rectangle.width / 2.0; // Center horizontally
+    let y_position = rectangle.height / 2.0; // Center vertically
+
     format!(
-        r#"<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect id="rectangle" x="{:.2}" y="{:.2}" style="fill:{};stroke:black;stroke-width:1px" width="{:.2}" height="{:.2}"/></svg>"#,
-        10.0, // Centering the rectangle in the SVG
-        10.0, // Centering the rectangle in the SVG
-        "#3498db",
+        r#"<svg xmlns="http://www.w3.org/2000/svg">
+            <rect id="rectangle" x="{:.2}" y="{:.2}" width="{:.2}" height="{:.2}" />
+        </svg>"#,
+        // Rectangle position
+        x_position,
+        y_position,
+        // Rectangle dimensions
         rectangle.width,
         rectangle.height
     )
@@ -24,7 +29,7 @@ pub fn create_circle_svg(circle: Circle) -> String {
     let dimension_end_x = cx + circle.radius; // End of the dimension line
 
     format!(
-        r#"<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+        r#"<svg xmlns="http://www.w3.org/2000/svg">
             <circle id="circle" cx="{:.2}" cy="{:.2}" r="{:.2}" />
             <g id="dimension">
                 <circle cx="{:.2}" cy="{:.2}" r="3" />
@@ -49,33 +54,14 @@ pub fn create_circle_svg(circle: Circle) -> String {
     )
 }
 
-pub fn calculate_rectangle_area(rectangle: &Rectangle) -> Result<f64, CalculationError> {
-    if rectangle.width < 0.0 || rectangle.height < 0.0 {
-        return Err(CalculationError {
-            message: "Width and height must be non-negative".to_string(),
-        });
-    }
-    Ok(rectangle.width * rectangle.height)
-}
-
-pub fn calculate_circle_area(circle: &Circle) -> Result<f64, CalculationError> {
-    if circle.radius < 0.0 {
-        return Err(CalculationError {
-            message: "Radius must be non-negative".to_string(),
-        });
-    }
-    Ok(std::f64::consts::PI * circle.radius * circle.radius)
-}
-
-/// Renders the home page of your application.
 #[allow(non_snake_case)]
 #[component]
 pub fn RectangleCard() -> impl IntoView {
     let i18n = use_context::<Memo<I18n>>().expect("I18n context not found");
 
     let sum_result = RwSignal::new(0.0);
-    let width = RwSignal::new("0".to_string());
-    let height = RwSignal::new("0".to_string());
+    let width = RwSignal::new("w".to_string());
+    let height = RwSignal::new("h".to_string());
 
     let calculate_area = move |_| {
         let rect = Rectangle::new(
@@ -131,6 +117,7 @@ pub fn RectangleCard() -> impl IntoView {
             </div>
             <div id="rectangle-formula" class="card__result__formula"></div>
           <p>{move || i18n.get().t("rec_area_result").to_string()}{sum_result}</p>
+          <a href="/cards/area/rectangle">{move || i18n.get().t("card_direct_link").to_string()}</a>
           <button on:click=result_to_clipboard>{move || i18n.get().t("copy_to_clipboard").to_string()}</button>
         </div>
       </div>
@@ -143,7 +130,7 @@ pub fn CircleCard() -> impl IntoView {
     let i18n = use_context::<Memo<I18n>>().expect("I18n context not found");
 
     let sum_result = RwSignal::new(0.0);
-    let radius = RwSignal::new("0".to_string());
+    let radius = RwSignal::new("r".to_string());
 
     let calculate_area = move |_| {
         let circ = Circle::new(radius.get().parse::<f64>().unwrap_or(0.0)).unwrap_or_default();
@@ -190,6 +177,7 @@ pub fn CircleCard() -> impl IntoView {
             </div>
             <div id="circle-formula" class="card__result__formula"></div>
           <p>{move || i18n.get().t("circle_area_result").to_string()}{sum_result}</p>
+          <a href="/cards/area/circle">{move || i18n.get().t("card_direct_link").to_string()}</a>
           <button on:click=result_to_clipboard>{move || i18n.get().t("copy_to_clipboard").to_string()}</button>
         </div>
       </div>

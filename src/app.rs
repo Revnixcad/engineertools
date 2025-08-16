@@ -1,4 +1,5 @@
 use crate::calculations::shapes_2d::*;
+use crate::cards::area::{CircleCard, RectangleCard};
 use crate::dom::storage::*;
 use crate::locales::i18n::I18n;
 use crate::pages::basics::BasicsPage;
@@ -87,6 +88,8 @@ pub fn Content() -> impl IntoView {
                 <Routes fallback>
                    <Route path=path!("") view=HomePage/>
                    <Route path=path!("/basics") view=BasicsPage/>
+                   <Route path=path!("/cards/area/circle") view=CircleCard/>
+                   <Route path=path!("/cards/area/rectangle") view=RectangleCard/>
                    <Route path=path!("/*any") view=NotFound/>
                 </Routes>
             </Router>

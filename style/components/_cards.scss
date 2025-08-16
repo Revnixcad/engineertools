@@ -48,9 +48,12 @@
       width: 100%;
     }
   }
-  // svg in cards styling
     // SVG styling within cards
     svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
       fill: $primary-color;
       stroke: black;
   

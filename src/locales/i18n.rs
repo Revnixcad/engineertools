@@ -40,10 +40,6 @@ fn en_translations() -> HashMap<&'static str, &'static str> {
         // basic page
         ("basic_page_title", "Basic Calculations"),
         ("basic_page_description", "This page contains basic calculations for engineers."),
-        // sum calculator
-        ("sum_calculator", "Sum calculator"),
-        ("calculate_sum", "Calculate Sum"),
-        ("sum_result", "The sum is: "),
         // rectangular area calculator
         ("rec_area_calculator", "Rectangular area calculator"),
         ("rec_area_calculate", "Calculate rectangle area"),
@@ -58,6 +54,7 @@ fn en_translations() -> HashMap<&'static str, &'static str> {
         ("circle_area_result", "The area of circle is: "),
         // other keys
         ("copy_to_clipboard", "Copy to clipboard"),
+        ("card_direct_link", "Direct link to this card"),
         // footer
         ("copyright", "Copyright 2025 engineertools.nl"),
         // ...add more keys
@@ -77,10 +74,6 @@ fn nl_translations() -> HashMap<&'static str, &'static str> {
         // basic page
         ("basic_page_title", "Basis Berekeningen"),
         ("basic_page_description", "Deze pagina bevat basis berekeningen voor engineers."),
-        // sum calculator
-        ("sum_calculator", "Som Calculator"),
-        ("calculate_sum", "Bereken som"),
-        ("sum_result", "De som is: "),
         // rectangular area calculator
         ("rec_area_calculator", "Rechthoek oppervlakte calculator"),
         ("rec_area_calculate", "Bereken oppervlakte"),
@@ -95,6 +88,7 @@ fn nl_translations() -> HashMap<&'static str, &'static str> {
         ("circle_area_result", "De oppervlakte van de cirkel is: "),
         // other keys
         ("copy_to_clipboard", "Kopieer naar klembord"),
+        ("card_direct_link", "Directe link naar deze kaart"),
         // footer
         ("copyright", "Auteursrecht 2025 engineertools.nl"),
         // ...add more keys
@@ -110,7 +104,7 @@ mod tests {
     fn test_i18n_en() {
         let i18n = I18n::new("en");
         assert_eq!(i18n.t("welcome"), "Welcome!");
-        assert_eq!(i18n.t("sum_calculator"), "Sum Calculator");
+        assert_eq!(i18n.t("menu_home"), "Home");
         assert_eq!(i18n.t("non_existent_key"), "non_existent_key");
     }
 
@@ -118,7 +112,7 @@ mod tests {
     fn test_i18n_nl() {
         let i18n = I18n::new("nl");
         assert_eq!(i18n.t("welcome"), "Welkom!");
-        assert_eq!(i18n.t("sum_calculator"), "Som Calculator");
+        assert_eq!(i18n.t("sum_calculator"), "Home");
         assert_eq!(i18n.t("non_existent_key"), "non_existent_key");
     }
 }
