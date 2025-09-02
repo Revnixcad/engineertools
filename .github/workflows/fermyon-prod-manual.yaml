@@ -68,7 +68,7 @@ jobs:
         run: cargo install --locked wasm-bindgen-cli --version 0.2.100
 
       - name: Install Spin
-        uses: fermyon/actions/spin/setup@v2
+        uses: fermyon/actions/spin/setup@v1
         with:
           version: v3
 
@@ -76,6 +76,6 @@ jobs:
         run: spin build --release
 
       - name: Deploy to Fermyon Cloud
-        uses: fermyon/actions/spin/deploy@v2
+        uses: fermyon/actions/spin/deploy@v1
         with:
           fermyon_token: ${{ secrets.FERMYON_CLOUD_TOKEN }}
