@@ -61,7 +61,7 @@ jobs:
 
       - name: Install cargo-leptos
         if: steps.cache-cargo-bins.outputs.cache-hit != 'true'
-        run: cargo install --locked cargo-leptos@0.1.18
+        run: cargo install --locked cargo-leptos
 
       - name: Install wasm-bindgen CLI (pinned)
         if: steps.cache-cargo-bins.outputs.cache-hit != 'true'
