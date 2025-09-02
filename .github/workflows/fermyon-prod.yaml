@@ -1,42 +1,123 @@
 name: Fermyon Deploy
 
-# Deploy only when a change is pushed or merged to `main`
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+
+# If a new push comes in to main, cancel the in-progress run to save time
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
 
 jobs:
-  spin:
+  # First, check if anything relevant changed. Skip the expensive job otherwise.
+  changed:
     runs-on: ubuntu-latest
-    name: Build and deploy
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
+      - name: Detect changes
+        id: filter
+        uses: dorny/paths-filter@v3
         with:
-          profile: minimal
-          toolchain: nightly
-          override: true
-          targets: wasm32-wasi
+          filters: |
+            backend:
+              - 'src/**'
+              - 'Cargo.toml'
+              - 'Cargo.lock'
+              - 'spin.toml'
+              - 'spin/**'
+              - 'assets/**'
+              - 'leptos.config.*'
+              - '.cargo/**'
+              - 'Makefile'
 
-      - name: Add Missing Rust Targets
+  build_and_deploy:
+    needs: changed
+    if: needs.changed.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1) Install Rust (stable) with only the target you need
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-wasip1
+
+      # 2) Speed up compilation with sccache
+      - name: Enable sccache
+        uses: mozilla-actions/sccache-action@v0.0.6
+
+      - name: Export sccache env
         run: |
-          rustup target add wasm32-unknown-unknown wasm32-wasip1
+          echo "RUSTC_WRAPPER=sccache" >> $GITHUB_ENV
+          # Reasonable upper bound for CI cache
+          echo "SCCACHE_CACHE_SIZE=3G" >> $GITHUB_ENV
 
-      - name: Install Cargo Leptos
+      # 3) Cache Cargo registry, git, build output, and cargo bins
+      - name: Cache Cargo registry + git
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: cargo-registry-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache target dir (incl. wasm)
+        uses: actions/cache@v4
+        with:
+          path: |
+            target
+          key: cargo-target-${{ runner.os }}-wasip1-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo-installed bins (cargo-leptos, wasm-bindgen-cli)
+        id: cache-cargo-bins
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin
+          key: cargo-bins-${{ runner.os }}-v1
+
+      - name: Cache sccache store
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sccache
+          key: sccache-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+
+      # 4) Install required CLIs (skip if cache already has them)
+      - name: Install cargo-leptos
+        if: steps.cache-cargo-bins.outputs.cache-hit != 'true'
         run: |
-          cargo install --locked cargo-leptos
+          cargo install --locked cargo-leptos@0.1.18
 
-      - name: Install wasm-bindgen CLI (compatible version)
+      - name: Install wasm-bindgen CLI (pinned)
+        if: steps.cache-cargo-bins.outputs.cache-hit != 'true'
         run: |
-          cargo install -f wasm-bindgen-cli --version 0.2.100
+          cargo install --locked wasm-bindgen-cli --version 0.2.100
 
+      # 5) Install Spin CLI
       - name: Install Spin
-        uses: fermyon/actions/spin/setup@v1
+        uses: fermyon/actions/spin/setup@v2
+        with:
+          version: v3
 
-      - name: Build and deploy
-        uses: fermyon/actions/spin/deploy@v1
+      # 6) Build first (clearer logs and better cache reuse)
+      - name: Build Spin app (release)
+        run: |
+          # If you use cargo-leptos to produce your client files, call it here:
+          # cargo leptos build --release
+          # Then build your Spin app:
+          spin build --up --release
+
+      # 7) Deploy after successful build
+      - name: Deploy to Fermyon Cloud
+        uses: fermyon/actions/spin/deploy@v2
         with:
           fermyon_token: ${{ secrets.FERMYON_CLOUD_TOKEN }}
